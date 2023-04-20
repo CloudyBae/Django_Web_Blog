@@ -1,6 +1,6 @@
 resource "aws_security_group" "django_sg" {
-  name        = "django_sg"
-  vpc_id      = djangoblog_vpc.main.id
+  name   = "django_sg"
+  vpc_id = djangoblog_vpc.main.id
 
   ingress {
     description      = "SSH"

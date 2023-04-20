@@ -1,6 +1,6 @@
 # create vpc
 resource "aws_vpc" "djangoblog_vpc" {
-  cidr_block = "${var.vpc_cidr_block}"
+  cidr_block = var.vpc_cidr_block
 
   tags = {
     Name = "djangoblog_vpc"

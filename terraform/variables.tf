@@ -1,17 +1,17 @@
 variable "region" {
-    default = "us-east-1"
+  default = "us-east-1"
 }
 
 variable "profile" {
-    default = "vscode"
+  default = "vscode"
 }
 
 variable "shared_config_files" {
-    default = "~/.aws/config"
+  default = "~/.aws/config"
 }
 
 variable "shared_credentials_files" {
-    default = "~/.aws/credentials"
+  default = "~/.aws/credentials"
 }
 
 variable "vpc_cidr_block" {
@@ -19,12 +19,12 @@ variable "vpc_cidr_block" {
 }
 
 variable "public_subnet_cidr_blocks" {
-    type  = list(string)
+  type    = list(string)
   default = ["10.0.0.0/20"]
 }
 
 variable "private_subnet_cidr_blocks" {
-    type = list(string)
+  type    = list(string)
   default = ["10.0.128.0/20"]
 }
 
@@ -36,5 +36,6 @@ variable "instance_type" {
   default = "t2.micro"
 }
 
-
-
+variable "ami_key_pair_name" {
+  default = "Django"
+}
