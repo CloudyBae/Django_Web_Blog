@@ -15,7 +15,7 @@ resource "aws_security_group" "django_sg" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = [aws_vpc.djangoblog_vpc.cidr_block]
+    security_groups = [aws_security_group.webtier_sg.id]
   }
 
   egress {
@@ -27,6 +27,68 @@ resource "aws_security_group" "django_sg" {
   }
 
   tags = {
-    Name = "django_sg"
+    Name = "DjangoBlog App SG"
+  }
+}
+
+resource "aws_security_group" "webtier_sg" {
+  name = "webtier_sg"
+  vpc_id = "${aws_vpc.djangoblog_vpc.id}"
+  
+  ingress {
+    description = "HTTP access from anywhere"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "HTTPS access from anywhere"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "SSH from anywhere"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
+  egress {
+    description = "Internet access to anywhere"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+tags = {
+    Name = "DjangoBlog Web SG"
+  }
+}
+
+resource "aws_security_group" "dbtier_sg" {
+  name        = "dbtier_sg"
+  description = "Allows inbound traffic from application tier"
+  vpc_id      = aws_vpc.djangoblog_vpc.id
+ingress {
+    description     = "Allows traffic from application tier"
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
+    security_groups = [aws_security_group.django_sg.id]
+  }
+egress {
+    from_port   = 32768
+    to_port     = 65535
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+tags = {
+    Name = "DjangoBlog Database SG"
   }
 }

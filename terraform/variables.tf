@@ -18,12 +18,19 @@ variable "vpc_cidr_block" {
   default = "10.0.0.0/16"
 }
 
-variable "public_subnet_cidr_block" {
-  default = "10.0.0.0/20"
+variable "public_web_subnet_cidr_blocks" {
+    type  = list(string)
+  default = ["10.0.0.0/20", "10.0.16.0/20"]
 }
 
-variable "private_subnet_cidr_block" {
-  default = "10.0.128.0/20"
+variable "private_app_subnet_cidr_blocks" {
+    type = list(string)
+  default = ["10.0.160.0/20", "10.0.144.0/20"]
+}
+
+variable "private_db_subnet_cidr_blocks" {
+    type = list(string)
+  default = ["10.0.128.0/20", "10.0.176.0/20"]
 }
 
 variable "ami_id" {
