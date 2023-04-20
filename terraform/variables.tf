@@ -18,14 +18,12 @@ variable "vpc_cidr_block" {
   default = "10.0.0.0/16"
 }
 
-variable "public_subnet_cidr_blocks" {
-  type    = list(string)
-  default = ["10.0.0.0/20"]
+variable "public_subnet_cidr_block" {
+  default = "10.0.0.0/20"
 }
 
-variable "private_subnet_cidr_blocks" {
-  type    = list(string)
-  default = ["10.0.128.0/20"]
+variable "private_subnet_cidr_block" {
+  default = "10.0.128.0/20"
 }
 
 variable "ami_id" {
@@ -38,4 +36,8 @@ variable "instance_type" {
 
 variable "ami_key_pair_name" {
   default = "Django"
+}
+
+variable "number_of_instances" {
+  default = 1
 }

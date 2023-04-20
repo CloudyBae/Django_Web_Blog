@@ -9,9 +9,7 @@ resource "aws_vpc" "djangoblog_vpc" {
 
 # create public subnet
 resource "aws_subnet" "public_subnet" {
-  count = length(var.public_subnet_cidr_blocks)
-
-  cidr_block = var.public_subnet_cidr_blocks
+  cidr_block = var.public_subnet_cidr_block
   vpc_id     = aws_vpc.djangoblog_vpc.id
 
   tags = {
@@ -21,9 +19,7 @@ resource "aws_subnet" "public_subnet" {
 
 # create private subnet
 resource "aws_subnet" "private_subnet" {
-  count = length(var.private_subnet_cidr_blocks)
-
-  cidr_block = var.private_subnet_cidr_blocks
+  cidr_block = var.private_subnet_cidr_block
   vpc_id     = aws_vpc.djangoblog_vpc.id
 
   tags = {
@@ -60,13 +56,13 @@ resource "aws_route_table" "private_rt" {
 
 # subnet association with route tables
 resource "aws_route_table_association" "public_subnet_association" {
-  count          = length(var.public_subnet_cidr_blocks)
+  count          = length(var.public_subnet_cidr_block)
   subnet_id      = aws_subnet.public_subnet.id
   route_table_id = aws_route_table.public_rt.id
 }
 
 resource "aws_route_table_association" "private_subnet_association" {
-  count          = length(var.private_subnet_cidr_blocks)
+  count          = length(var.private_subnet_cidr_block)
   subnet_id      = aws_subnet.private_subnet.id
   route_table_id = aws_route_table.private_rt.id
 }

@@ -1,23 +1,21 @@
 resource "aws_security_group" "django_sg" {
   name   = "django_sg"
-  vpc_id = djangoblog_vpc.main.id
+  vpc_id = aws_vpc.djangoblog_vpc.id
 
   ingress {
-    description      = "SSH"
-    from_port        = 22
-    to_port          = 22
-    protocol         = "tcp"
-    cidr_blocks      = [djangoblog_vpc.main.cidr_block]
-    ipv6_cidr_blocks = [djangoblog_vpc.main.ipv6_cidr_block]
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = [aws_vpc.djangoblog_vpc.cidr_block]
   }
 
   ingress {
-    description      = "http"
-    from_port        = 80
-    to_port          = 80
-    protocol         = "http"
-    cidr_blocks      = [djangoblog_vpc.main.cidr_block]
-    ipv6_cidr_blocks = [djangoblog_vpc.main.ipv6_cidr_block]
+    description = "http"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = [aws_vpc.djangoblog_vpc.cidr_block]
   }
 
   egress {
