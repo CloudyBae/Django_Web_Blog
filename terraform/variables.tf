@@ -52,3 +52,11 @@ variable "number_of_instances" {
 variable "ip" {
   description = "My IP"
 }
+
+variable "db_pass" {
+  description = "DB pass"
+}
+
+variable "db_user" {
+  description = "DB user"
+}
