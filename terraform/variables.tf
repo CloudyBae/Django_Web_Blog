@@ -41,3 +41,7 @@ variable "ami_key_pair_name" {
 variable "number_of_instances" {
   default = 1
 }
+
+variable "ip" {
+  description = "My IP"
+}
