@@ -132,6 +132,16 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 LOGIN_REDIRECT_URL = "blog-home"
 LOGIN_URL = "login"
 
+
+EMAIL_BACKEND = "django_smtp_ssl.SSLEmailBackend"
+EMAIL_HOST = "email-smtp.us-east-1.amazonaws.com"
+EMAIL_PORT = "465"
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = os.environ.get("DJANGO_AWS_ACCESS_KEY_ID")
+EMAIL_HOST_PASSWORD = os.environ.get("DJANGO_AWS_SECRET_ACCESS_KEY")
+
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
