@@ -1,13 +1,13 @@
 resource "aws_lb" "django_alb" {
-  name               = "DjangoBlog ALB"
+  name               = "djangoblog-alb"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.webtier_sg.id]
-  subnets            = [aws_subnet.public_web_subnet.*.id]
+  subnets            = aws_subnet.public_web_subnet.*.id
 }
 
 resource "aws_lb_target_group" "django_target_group" {
-  name     = "Django target group"
+  name     = "Django-target-group"
   port     = 80
   protocol = "HTTP"
   vpc_id   = aws_vpc.djangoblog_vpc.id

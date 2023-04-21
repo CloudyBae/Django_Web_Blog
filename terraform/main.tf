@@ -62,6 +62,27 @@ resource "aws_route_table" "public_rt" {
   }
 }
 
+resource "aws_nat_gateway" "djangoblog_natgw" {
+  count = length(var.public_web_subnet_cidr_blocks)
+
+  allocation_id = aws_eip.djangoblog_eip[count.index].id
+  subnet_id     = aws_subnet.public_web_subnet[count.index].id
+
+  tags = {
+    Name = "djangoblog_natgw_${count.index + 1}"
+  }
+}
+
+resource "aws_eip" "djangoblog_eip" {
+  count = length(var.public_web_subnet_cidr_blocks)
+  vpc = true
+
+  tags = {
+    Name = "djangoblog_eip_${count.index + 1}"
+  }
+}
+
+
 resource "aws_route_table" "private_rt" {
   vpc_id = aws_vpc.djangoblog_vpc.id
 
@@ -72,19 +93,19 @@ resource "aws_route_table" "private_rt" {
 
 # subnet association with route tables
 resource "aws_route_table_association" "public_subnet_association" {
-  count          = length(var.public_subnet_cidr_block)
-  subnet_id      = aws_subnet.public_web_subnet.id
+  count          = length(var.public_web_subnet_cidr_blocks)
+  subnet_id      = aws_subnet.public_web_subnet[count.index].id
   route_table_id = aws_route_table.public_rt.id
 }
 
 resource "aws_route_table_association" "private_app_subnet_association" {
-  count          = length(var.private_app_subnet_cidr_block)
-  subnet_id      = aws_subnet.private_app_subnet.id
+  count          = length(var.private_app_subnet_cidr_blocks)
+  subnet_id      = aws_subnet.private_app_subnet[count.index].id
   route_table_id = aws_route_table.private_rt.id
 }
 
 resource "aws_route_table_association" "private_db_subnet_association" {
-  count          = length(var.private_db_subnet_cidr_block)
-  subnet_id      = aws_subnet.private_db_subnet.id
+  count          = length(var.private_db_subnet_cidr_blocks)
+  subnet_id      = aws_subnet.private_db_subnet[count.index].id
   route_table_id = aws_route_table.private_rt.id
 }
