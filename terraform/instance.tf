@@ -6,6 +6,7 @@ resource "aws_instance" "djangoblog_instance" {
   key_name                    = var.ami_key_pair_name
   vpc_security_group_ids      = ["${aws_security_group.django_sg.id}"]
   associate_public_ip_address = false
+  user_data                   = "${file("data.sh")}"
 
   tags = {
     Name = "Django Blog"

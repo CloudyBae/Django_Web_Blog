@@ -91,6 +91,23 @@ resource "aws_route_table" "private_rt" {
   }
 }
 
+resource "aws_route" "private_nat_gateway" {
+  route_table_id         = aws_route_table.private_rt.id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_nat_gateway.djangoblog_natgw.id
+
+}
+
+resource "aws_route_table" "app" {
+  vpc_id = "${aws_vpc.djangoblog_vpc.id}"
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${aws_nat_gateway.djangoblog_natgw.id}"
+  }
+
+}
+
 # subnet association with route tables
 resource "aws_route_table_association" "public_subnet_association" {
   count          = length(var.public_web_subnet_cidr_blocks)
@@ -101,7 +118,7 @@ resource "aws_route_table_association" "public_subnet_association" {
 resource "aws_route_table_association" "private_app_subnet_association" {
   count          = length(var.private_app_subnet_cidr_blocks)
   subnet_id      = aws_subnet.private_app_subnet[count.index].id
-  route_table_id = aws_route_table.private_rt.id
+  route_table_id = aws_route_table.app.id
 }
 
 resource "aws_route_table_association" "private_db_subnet_association" {
