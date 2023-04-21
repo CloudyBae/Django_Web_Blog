@@ -13,6 +13,7 @@ resource "aws_subnet" "public_web_subnet" {
 
   cidr_block = var.public_web_subnet_cidr_blocks[count.index]
   vpc_id     = aws_vpc.djangoblog_vpc.id
+  availability_zone = var.az[count.index]
 
   tags = {
     Name = "djangoblog_public_web_subnet_${count.index + 1}"
@@ -25,6 +26,7 @@ resource "aws_subnet" "private_app_subnet" {
 
   cidr_block = var.private_app_subnet_cidr_blocks[count.index]
   vpc_id     = aws_vpc.djangoblog_vpc.id
+  availability_zone = var.az[count.index]
 
   tags = {
     Name = "djangoblog_private_app_subnet_${count.index + 1}"
@@ -37,6 +39,7 @@ resource "aws_subnet" "private_db_subnet" {
 
   cidr_block = var.private_db_subnet_cidr_blocks[count.index]
   vpc_id     = aws_vpc.djangoblog_vpc.id
+  availability_zone = var.az[count.index]
 
   tags = {
     Name = "djangoblog_private_db_subnet_${count.index + 1}"
@@ -63,22 +66,19 @@ resource "aws_route_table" "public_rt" {
 }
 
 resource "aws_nat_gateway" "djangoblog_natgw" {
-  count = length(var.public_web_subnet_cidr_blocks)
-
-  allocation_id = aws_eip.djangoblog_eip[count.index].id
-  subnet_id     = aws_subnet.public_web_subnet[count.index].id
+  allocation_id = aws_eip.djangoblog_eip.id
+  subnet_id     = aws_subnet.public_web_subnet[0].id
 
   tags = {
-    Name = "djangoblog_natgw_${count.index + 1}"
+    Name = "djangoblog_natgw"
   }
 }
 
 resource "aws_eip" "djangoblog_eip" {
-  count = length(var.public_web_subnet_cidr_blocks)
   vpc = true
 
   tags = {
-    Name = "djangoblog_eip_${count.index + 1}"
+    Name = "djangoblog_eip"
   }
 }
 

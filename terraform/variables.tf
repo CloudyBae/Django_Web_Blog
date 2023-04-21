@@ -33,6 +33,11 @@ variable "private_db_subnet_cidr_blocks" {
   default = ["10.0.0.160/28", "10.0.0.176/28"]
 }
 
+variable "az" {
+    type = list(string)
+  default = ["us-east-1a", "us-east-1b"]
+}
+
 variable "ami_id" {
   default = "ami-007855ac798b5175e"
 }
