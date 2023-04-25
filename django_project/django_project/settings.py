@@ -28,7 +28,7 @@ SECRET_KEY = getenv("SECRET_KEY")
 DEBUG = getenv("IS_DEVELOPMENT", True)
 
 ALLOWED_HOSTS = [
-    getenv("APP_HOST")
+    getenv("APP_HOST", "localhost")
 ]
 
 
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "crispy_forms",
     "crispy_bootstrap5",
+    "storages",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -83,8 +84,12 @@ WSGI_APPLICATION = "django_project.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "postgres",
+        "USER": getenv("DB_USER"),
+        "PASSWORD": getenv("DB_PASS"),
+        "HOST": "django-blog.ct6mewisauyv.us-east-1.rds.amazonaws.com",
+        "PORT": "5432"
     }
 }
 
@@ -129,6 +134,18 @@ STATIC_URL = "/static/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
 
+AWS_STORAGE_BUCKET_NAME = "django-blog-12345"
+AWS_S3_REGION_NAME = "us-east-1"
+AWS_ACCESS_KEY_ID = getenv("AWS_ACCESS_KEY")
+AWS_SECRET_ACCESS_KEY = getenv("AWS_SECRET_KEY")
+
+AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+
+STATICFILES_FOLDER = "static"
+MEDIAFILES_FOLDER = "media"
+
+STATICFILES_STORAGE = "custom_storages.StaticFileStorage"
+DEFAULT_FILE_STORAGE = "custom_storages.MediaFileStorage"
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
