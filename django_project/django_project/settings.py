@@ -88,7 +88,7 @@ DATABASES = {
         "NAME": "postgres",
         "USER": getenv("DB_USER"),
         "PASSWORD": getenv("DB_PASS"),
-        "HOST": "django-blog.ct6mewisauyv.us-east-1.rds.amazonaws.com",
+        "HOST": "test.ct6mewisauyv.us-east-1.rds.amazonaws.com",
         "PORT": "5432"
     }
 }
