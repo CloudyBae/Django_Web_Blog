@@ -24,7 +24,6 @@ resource "aws_s3_bucket_policy" "djangoblog_bucket_policy" {
 
 data "aws_iam_policy_document" "djangoblog_policy" {
   statement {
-    principal = "*"
     actions = ["s3:GetObject"]
     resources = ["${aws_s3_bucket.djangoblog_bucket.arn}/*"]
     effect = "Allow"
