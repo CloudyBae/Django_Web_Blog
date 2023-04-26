@@ -28,7 +28,7 @@ Created the needed 3 tier AWS infrastructure by code with Terraform.
 ![Screenshot_8](https://user-images.githubusercontent.com/109190196/233530291-6465ed88-aca3-4680-be59-1021d292190a.jpg)
 
 I migrated the static and media files in my local Django fileystem into S3.  
-![Screenshot_12](https://user-images.githubusercontent.com/109190196/234466588-62d9098b-5601-4a3f-a0c1-bb61bfde9a1b.jpg)  
+![InkedScreenshot_12](https://user-images.githubusercontent.com/109190196/234468180-b403aa2f-b5d8-4e65-ae2f-46b6920f02ee.jpg)
 ![InkedScreenshot_13](https://user-images.githubusercontent.com/109190196/234466750-6e9db9e5-40b9-47b7-a4eb-0b75405e3d8c.jpg)  
 
 In the public web ec2 instance, I cloned my git repo and migrated the databse from the local sqlite db into the AWS RDS PostgreSQL db in the private database tier in my vpc.  
