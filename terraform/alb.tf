@@ -15,11 +15,9 @@ resource "aws_lb_target_group" "django_target_group" {
 
 resource "aws_lb_target_group_attachment" "django_tg_attach" {
   target_group_arn = aws_lb_target_group.django_target_group.arn
-  target_id        = aws_instance.djangoblog_instance.id
+  target_id        = aws_instance.djangoblog_web_instance.id #change to app after elastic beanstalk deployment
   port             = 80
-depends_on = [
-    aws_instance.djangoblog_instance,
-  ]
+
 }
 
 resource "aws_lb_listener" "django_alb_listener" {
