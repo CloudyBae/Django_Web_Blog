@@ -47,7 +47,7 @@ I deleted the ec2 instance in the public web app tier and configured the securit
 
 To make my web app more secure, I deployed a firewall via AWS WAF. 
 ![Screenshot_23](https://user-images.githubusercontent.com/109190196/234467796-ffc850c1-de26-4917-a53f-6b207e482a08.jpg)
-![Screenshot_22](https://user-images.githubusercontent.com/109190196/234467804-55b409e5-7a61-4c98-bd47-f69d0d17649d.jpg)
+![Screenshot_24](https://user-images.githubusercontent.com/109190196/234468461-b38e7bf2-68b3-499a-9a0a-668748e71978.jpg)
 
 To prove that the firewall was indeed working as intended, I made a new rule and blocked my own IP.
 ![Screenshot_25](https://user-images.githubusercontent.com/109190196/234467864-34b2e67e-3890-46e9-a0a5-ee3d2e769df8.jpg)
